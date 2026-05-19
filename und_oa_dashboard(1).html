@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Access Publications — Chester Fritz Library, UND</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     UND BRAND COLORS
+     Primary:  #009A44 (UND Green, Pantone 347)
+     White:    #FFFFFF
+     Black:    #000000
+     Gray:     #AEAEAE (UND Gray, Pantone 421)
+     Dark bg:  #003822 (deep green for header, derived)
+     Light bg: #F2F8F5 (very light green tint for page bg)
+     ============================================================ */
+  :root {
+    --und-green:       #009A44;
+    --und-green-dark:  #007A36;
+    --und-green-deeper:#004D22;
+    --und-green-light: #E8F5EE;
+    --und-green-pale:  #F2F8F5;
+    --und-black:       #000000;
+    --und-gray:        #AEAEAE;
+    --und-gray-light:  #E8E8E8;
+    --und-gray-pale:   #F5F5F5;
+    --und-white:       #FFFFFF;
+    --text-dark:       #1A1A1A;
+    --text-mid:        #444444;
+    --text-light:      #666666;
+    --border:          #D0D0D0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', Arial, sans-serif;
+    background: var(--und-gray-pale);
+    color: var(--text-dark);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── TOP BAR ── */
+  .und-topbar {
+    background: var(--und-green-deeper);
+    padding: 6px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .und-topbar-logo {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--und-white);
+    text-decoration: none;
+  }
+  .und-topbar-divider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255,255,255,0.3);
+  }
+  .und-topbar-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--und-green);
+    color: var(--und-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle diagonal graphic element — brand-inspired */
+  header::after {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 320px;
+    height: 320px;
+    background: rgba(0,0,0,0.07);
+    transform: rotate(20deg);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-eyebrow {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 10px;
+  }
+
+  header h1 {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--und-white);
+    margin-bottom: 12px;
+  }
+
+  header p.subtitle {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.88);
+    max-width: 660px;
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--und-black);
+    padding: 0 32px;
+  }
+  .stats-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 18px 40px 18px 0;
+    color: var(--und-white);
+    border-right: 1px solid rgba(255,255,255,0.12);
+    margin-right: 40px;
+  }
+  .stat-item:last-child { border-right: none; margin-right: 0; }
+  .stat-num {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--und-green);
+    line-height: 1;
+    letter-spacing: 0.5px;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--und-gray);
+    margin-top: 3px;
+    font-weight: 700;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 268px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--und-white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--und-green);
+    position: sticky;
+    top: 20px;
+  }
+
+  .sidebar-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--und-gray-light);
+  }
+  .sidebar-section:last-child { border-bottom: none; }
+
+  .sidebar-title {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--und-green-dark);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .search-wrap { position: relative; }
+  .search-wrap input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    border: 1.5px solid var(--border);
+    font-size: 0.9rem;
+    font-family: 'Lato', Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    color: var(--text-dark);
+    background: var(--und-white);
+  }
+  .search-wrap input:focus { border-color: var(--und-green); }
+  .search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--und-gray);
+    width: 15px; height: 15px;
+  }
+
+  .filter-btn {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    padding: 7px 8px;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    font-family: 'Lato', Arial, sans-serif;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: background 0.15s, color 0.15s;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filter-btn:hover { background: var(--und-green-light); color: var(--und-green-dark); }
+  .filter-btn.active {
+    background: var(--und-green);
+    color: var(--und-white);
+    font-weight: 700;
+  }
+  .filter-btn .count { font-size: 0.75rem; opacity: 0.7; font-weight: 400; }
+  .filter-btn.active .count { opacity: 0.9; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    margin-bottom: 20px;
+    background: var(--und-white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--und-green);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 13px 16px;
+    border: none;
+    background: none;
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover { background: var(--und-green-light); color: var(--und-green-dark); }
+  .tab-btn.active {
+    background: var(--und-green);
+    color: var(--und-white);
+  }
+  .tab-btn svg { width: 15px; height: 15px; }
+
+  /* ── RESULTS HEADER ── */
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 0 2px;
+  }
+  .results-count { font-size: 0.875rem; color: var(--text-light); }
+  .results-count strong { color: var(--text-dark); font-weight: 700; }
+
+  .sort-select {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 0.85rem;
+    border: 1.5px solid var(--border);
+    padding: 5px 10px;
+    outline: none;
+    color: var(--text-dark);
+    background: var(--und-white);
+    cursor: pointer;
+  }
+  .sort-select:focus { border-color: var(--und-green); }
+
+  /* ── TABS DISPLAY ── */
+  #tab-articles { display: block; }
+  #tab-authors  { display: none; }
+  #tab-stats    { display: none; }
+
+  /* ── ARTICLE CARDS ── */
+  .article-card {
+    background: var(--und-white);
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    padding: 18px 20px;
+    margin-bottom: 8px;
+    transition: border-left-color 0.2s, box-shadow 0.2s;
+  }
+  .article-card:hover {
+    border-left-color: var(--und-green);
+    box-shadow: 0 2px 12px rgba(0,154,68,0.1);
+  }
+
+  .article-title {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.4;
+    margin-bottom: 7px;
+  }
+  .article-title a {
+    color: var(--und-green-dark);
+    text-decoration: none;
+  }
+  .article-title a:hover {
+    text-decoration: underline;
+    color: var(--und-green);
+  }
+
+  .article-meta {
+    font-size: 0.84rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 16px;
+  }
+  .article-meta span { display: flex; align-items: center; gap: 4px; }
+  .article-meta svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .article-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .tag-publisher {
+    background: var(--und-black);
+    color: var(--und-white);
+  }
+  .tag-field {
+    background: var(--und-green);
+    color: var(--und-white);
+  }
+  .tag-oa {
+    background: var(--und-green-light);
+    color: var(--und-green-dark);
+    border: 1px solid var(--und-green);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .tag-oa svg { width: 10px; height: 10px; }
+  .doi-link {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--und-green-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--und-green);
+    padding-bottom: 1px;
+    font-weight: 500;
+  }
+  .doi-link:hover { color: var(--und-green); }
+
+  /* ── AUTHORS ── */
+  .authors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 8px;
+  }
+  .author-card {
+    background: var(--und-white);
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .author-card:hover {
+    border-left-color: var(--und-green);
+    box-shadow: 0 2px 10px rgba(0,154,68,0.1);
+  }
+  .author-name {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+    letter-spacing: 0.3px;
+  }
+  .author-count { font-size: 0.8rem; color: var(--text-light); }
+  .author-pubs {
+    margin-top: 5px;
+    font-size: 0.78rem;
+    color: var(--und-green-dark);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── STATS ── */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stats-card {
+    background: var(--und-white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--und-green);
+    padding: 20px;
+  }
+  .stats-card h3 {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--und-green-dark);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-label { width: 155px; flex-shrink: 0; color: var(--text-dark); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; height: 8px; background: var(--und-green-light); }
+  .bar-fill { height: 100%; background: var(--und-green); transition: width 0.5s ease; }
+  .bar-fill-black { background: var(--und-black); }
+  .bar-fill-gray { background: var(--und-gray); }
+  .bar-num { font-size: 0.82rem; color: var(--text-light); min-width: 24px; text-align: right; font-weight: 700; }
+
+  /* ── EMPTY / UTIL ── */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+  .empty-state svg { width: 44px; height: 44px; margin: 0 auto 14px; display: block; opacity: 0.3; }
+
+  .clear-btn {
+    background: none;
+    border: none;
+    color: var(--und-green-dark);
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  /* ── PAGINATION ── */
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--und-gray-light); }
+  .page-btn {
+    padding: 6px 12px;
+    border: 1.5px solid var(--border);
+    background: var(--und-white);
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-dark);
+  }
+  .page-btn:hover:not(:disabled) { border-color: var(--und-green); color: var(--und-green); }
+  .page-btn.active { background: var(--und-green); color: var(--und-white); border-color: var(--und-green); font-weight: 700; }
+  .page-btn:disabled { opacity: 0.35; cursor: default; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--und-black);
+    color: rgba(255,255,255,0.7);
+    padding: 24px 32px;
+    margin-top: 40px;
+    font-size: 0.82rem;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    font-family: 'Oswald', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--und-white);
+  }
+  .footer-brand span { color: var(--und-green); }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: var(--und-green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .stats-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.8rem; }
+    .header-inner { padding: 28px 20px; }
+    .stats-bar { padding: 0 20px; }
+    .stat-item { padding: 14px 24px 14px 0; margin-right: 24px; }
+    .und-topbar { padding: 6px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- UND Top Bar -->
+<div class="und-topbar">
+  <a class="und-topbar-logo" href="https://und.edu">University of North Dakota</a>
+  <div class="und-topbar-divider"></div>
+  <span class="und-topbar-sub">Chester Fritz Library</span>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow">Chester Fritz Library &nbsp;·&nbsp; Read &amp; Publish Program</div>
+    <h1>Open Access Publications</h1>
+    <p class="subtitle">Research made freely available to the world — UND authors publishing open access at no personal cost, supported by the Chester Fritz Library's publisher agreements.</p>
+  </div>
+</header>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-num">85</div>
+      <div class="stat-label">Articles Published</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Publisher Partners</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">15</div>
+      <div class="stat-label">Research Fields</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Open Access</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Search</div>
+      <div class="search-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Title, author, journal…">
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Publisher</div>
+      <div id="publisher-filters"></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Research Field</div>
+      <div id="field-filters"></div>
+    </div>
+    <div class="sidebar-section" style="padding:12px 20px;">
+      <button class="clear-btn" onclick="clearFilters()">Clear all filters</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('articles',this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Articles
+      </button>
+      <button class="tab-btn" onclick="switchTab('authors',this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Authors
+      </button>
+      <button class="tab-btn" onclick="switchTab('stats',this)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        Statistics
+      </button>
+    </div>
+
+    <div id="tab-articles">
+      <div class="results-header">
+        <div class="results-count"><strong id="filtered-count">85</strong> articles</div>
+        <select class="sort-select" id="sort-select" onchange="render()">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="title">Title A–Z</option>
+          <option value="author">Author A–Z</option>
+        </select>
+      </div>
+      <div id="article-list"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div id="tab-authors">
+      <div class="results-header">
+        <div class="results-count"><strong id="author-count">—</strong> contributing authors</div>
+      </div>
+      <div class="authors-grid" id="author-list"></div>
+    </div>
+
+    <div id="tab-stats">
+      <div class="stats-grid" id="stats-content"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">University of <span>North Dakota</span></div>
+      <div style="margin-top:4px;">Chester Fritz Library &nbsp;·&nbsp; Grand Forks, ND 58202</div>
+    </div>
+    <div style="text-align:right;">
+      <div><a href="https://library.und.edu">library.und.edu</a></div>
+      <div style="margin-top:4px;">© 2025 University of North Dakota</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ARTICLES = [{"publisher": "Royal Society of Chemistry", "title": "Biodegradable hyperbranched polyesters of trimethylolpropane with acrylate side chains enabling sustainable gel materials and nanomaterials for drug delivery applications", "doi": "10.1039/D5TB00806A", "journal": "Journal of Materials Chemistry B", "subject": "Chemistry", "author": "Dr Binglin Sui", "date": "2025-07-16 00:00:00", "article_type": "Paper", "license": "CC BY-NC", "field": "Chemistry"}, {"publisher": "Royal Society of Chemistry", "title": "<b>Carrier-free single-molecule hypoxia-activated nanoprodrug of SN38 with ultrahigh drug loading for pancreatic cancer treatment</b>", "doi": "10.1039/D5TB01434D", "journal": "Journal of Materials Chemistry B", "subject": "Chemistry", "author": "Dr Binglin Sui", "date": "2025-11-12 00:00:00", "article_type": "Paper", "license": "CC BY-NC", "field": "Chemistry"}, {"publisher": "Springer Nature", "title": "Impact of Breastfeeding Barriers on Racial/Ethnic Disparities in Breastfeeding Outcomes in North Dakota", "doi": "10.1007/s40615-024-01943-z", "journal": "Journal of Racial and Ethnic Health Disparities", "subject": "Medicine", "author": "Andrew Williams", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Using physical activity to advance a career in clinical nutrition", "doi": "10.1038/s41430-024-01410-2", "journal": "European Journal of Clinical Nutrition", "subject": "Medicine", "author": "Henry C. Lukaski", "date": "", "article_type": "ReviewPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Operational wind and turbulence nowcasting capability for advanced air mobility", "doi": "10.1007/s00521-024-09614-0", "journal": "Neural Computing and Applications", "subject": "Computer Science", "author": "Mounir Chrit", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Computer Science"}, {"publisher": "Springer Nature", "title": "Modelling vegetation phenology at six field stations within the U.S. Great Plains: constructing a 38-year timeseries of GCC, VCI, NDVI, and EVI2 using PhenoCam imagery and DAYMET meteorological records", "doi": "10.1007/s00704-024-04933-7", "journal": "Theoretical and Applied Climatology", "subject": "Earth and Environmental Science", "author": "Anaí Caparó Bellido", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Mathematics education researchers’ practices in interdisciplinary collaborations: embracing different ways of knowing", "doi": "10.1007/s13394-024-00489-x", "journal": "Mathematics Education Research Journal", "subject": "Education", "author": "Elizabeth Suazo-Flores", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Effective Elastic Properties and Micro-mechanical Damage Evolution of Composite Granular Rocks: Insights from Particulate Discrete Element Modelling", "doi": "10.1007/s00603-024-03858-x", "journal": "Rock Mechanics and Rock Engineering", "subject": "Earth and Environmental Science", "author": "Prasad Pothana", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Examining the emergence of a learning collaborative: a framework to support complex program implementation", "doi": "10.1007/s43545-024-00890-0", "journal": "SN Social Sciences", "subject": "Social Sciences", "author": "Isaac Karikari", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Social Sciences"}, {"publisher": "Springer Nature", "title": "Improving accuracy in predictions about future performance", "doi": "10.1007/s12144-024-06023-3", "journal": "Current Psychology", "subject": "Behavioral Science and Psychology", "author": "Joelle C. Ruthig", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "Uncovering further diversity of Ochoterenatrema Caballero, 1943 (Digenea: Lecithodendriidae) in South American bats", "doi": "10.1007/s11230-024-10165-0", "journal": "Systematic Parasitology", "subject": "Biomedical and Life Sciences", "author": "Vasyl V. Tkach", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Evolution of Long-Term Load Reduction Using Borrowed Soil", "doi": "10.1007/s40999-024-00989-8", "journal": "International Journal of Civil Engineering", "subject": "Engineering", "author": "I.-Hsuan Ho", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "Method of Average Vertical Earth Pressure for HFCCTs Based on Differential Settlement", "doi": "10.1007/s13369-024-09223-y", "journal": "Arabian Journal for Science and Engineering", "subject": "Engineering", "author": "I.-Hsuan Ho", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "Rural Suicide: Demographics, Causes, and Treatment Implications", "doi": "10.1007/s10597-024-01327-x", "journal": "Community Mental Health Journal", "subject": "Medicine", "author": "Michael Prazak", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Cold Region River Flood Mapping and Scour Potential Prediction: Insights from Hydraulic Model Using Advanced Autonomous Surface Vehicles", "doi": "10.1007/s40710-024-00721-7", "journal": "Environmental Processes", "subject": "Earth and Environmental Science", "author": "Vida Atashi", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Comparison of Sexual Violence Perpetration Rates by Among Gay, Lesbian and Heterosexual Cisgender Adults", "doi": "10.1007/s13178-024-01030-2", "journal": "Sexuality Research and Social Policy", "subject": "Behavioral Science and Psychology", "author": "R. E. Anderson", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "Geospatial Analysis of the Socioeconomic and Demographic Effects of Historic Coal Mining in the Greater Pittsburgh Region, Pennsylvania, USA", "doi": "10.1007/s40980-024-00128-w", "journal": "Spatial Demography", "subject": "Social Sciences", "author": "Lauren Bram", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Social Sciences"}, {"publisher": "Springer Nature", "title": "Artificial intelligence for predicting arctic permafrost and active layer temperatures along the Alaskan North Slope", "doi": "10.1007/s12145-024-01486-1", "journal": "Earth Science Informatics", "subject": "Earth and Environmental Science", "author": "Robert Chance", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "A new PVA-κCA double-network hydrogel comprising conductive polyaniline nanofibers for strain sensing applications", "doi": "10.1007/s42247-024-00902-y", "journal": "Emergent Materials", "subject": "Chemistry and Materials Science", "author": "Ali S. Alshami", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Chemistry"}, {"publisher": "Springer Nature", "title": "A hierarchically porous and SLIT3-releasing scaffold for bone tissue engineering applications", "doi": "10.1007/s10853-024-10379-z", "journal": "Journal of Materials Science", "subject": "Chemistry and Materials Science", "author": "Ali S. Alshami", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Chemistry"}, {"publisher": "Springer Nature", "title": "Exploring the potential and performance constraints of Ni-rich LiNi\n        $$_{0.9}$$\n        \n                  \n          \n            \n            \n              0.9\n            \n            \n          \n        \n               \n      Co\n        $$_{0.1}$$\n        \n                  \n          \n            \n            \n              0.1\n            \n            \n          \n        \n               \n      O\n        $$_2$$\n        \n                  \n          \n            \n            2\n            \n          \n        \n               \n       cathodes for lithium-ion battery application", "doi": "10.1557/s43580-024-01064-z", "journal": "MRS Advances", "subject": "Chemistry and Materials Science", "author": "Temitayo Ikuerowo", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Chemistry"}, {"publisher": "Springer Nature", "title": "Polyaxial Stress-Dependent Tensorial Permeability Variations of a Columnar Jointed Rock Mass: Insights from 3D Distinct Element Method", "doi": "10.1007/s40098-024-01125-y", "journal": "Indian Geotechnical Journal", "subject": "Engineering", "author": "Prasad Pothana", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "Rage Against the Dying of the Light: Employees’ Moral Outrage, Anger Expression, and Generalized Well-Being", "doi": "10.1007/s10551-024-05919-1", "journal": "Journal of Business Ethics", "subject": "Education", "author": "Sean R. Valentine", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Condition assessment of bolted connections in steel structures using deep learning", "doi": "10.1007/s41062-025-01860-y", "journal": "Innovative Infrastructure Solutions", "subject": "Earth and Environmental Science", "author": "Faezeh Jafari", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "A Qualitatively-Informed Approach to Examining the Construct Validity of Alcohol-Involved Sexual Violence", "doi": "10.1007/s12119-025-10324-5", "journal": "Sexuality & Culture", "subject": "Social Sciences", "author": "Tiffany Chiu", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Social Sciences"}, {"publisher": "Springer Nature", "title": "Weighted LAD-Liu-LASSO for robust estimation and sparsity", "doi": "10.1007/s00180-025-01605-6", "journal": "Computational Statistics", "subject": "Mathematics and Statistics", "author": "Adewale Lukman", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Mathematics"}, {"publisher": "Springer Nature", "title": "Stroke survivors’ and informal caregivers’ perceptions of depressive symptoms after stroke: an explanatory sequential mixed-methods study", "doi": "10.1007/s12144-025-07580-x", "journal": "Current Psychology", "subject": "Behavioral Science and Psychology", "author": "Tanya Trotter", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "Middle School Students' Experiences with Place-Based STEM Outreach", "doi": "10.1007/s11165-025-10245-1", "journal": "Research in Science Education", "subject": "Education", "author": "Tugba Boz", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Growth hormone–deficient Ames dwarf mice resist sarcopenia and exhibit enhanced endurance running performance at 24 months", "doi": "10.1007/s11357-025-01630-9", "journal": "GeroScience", "subject": "Biomedical and Life Sciences", "author": "Holly M. Brown-Borg", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Remarks on the diversity of Hysteromorpha Lutz 1931 (Digenea, Diplostomidae), with erection of a new species from South America", "doi": "10.1007/s11230-025-10224-0", "journal": "Systematic Parasitology", "subject": "Biomedical and Life Sciences", "author": "Vasyl V. Tkach", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Experimental study on the effect of stress and water content on resilient modulus of unsaturated subgrade soil: implications for pavement design", "doi": "10.1007/s12517-025-12246-w", "journal": "Arabian Journal of Geosciences", "subject": "Earth and Environmental Science", "author": "Mulugeta Damtew Amare", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Validating a Reading Comprehension Assessment for College Students: Preliminary Findings", "doi": "10.1007/s10936-025-10144-6", "journal": "Journal of Psycholinguistic Research", "subject": "Behavioral Science and Psychology", "author": "Virginia Clinton-Lisell", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "GLOW-DL: Generalized Light-Optimized Workflow with Deep Learning for Contamination Detection Using Fluorescence Imaging in Variable Conditions", "doi": "10.1007/s42853-025-00262-3", "journal": "Journal of Biosystems Engineering", "subject": "Engineering", "author": "Mahsa Aliee", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "Marijuana policy and tribal communities in the United States", "doi": "10.1057/s41271-025-00572-y", "journal": "Journal of Public Health Policy", "subject": "Social Sciences", "author": "Daphne E. Pedersen", "date": "", "article_type": "ReviewPaper", "license": "CC BY", "field": "Social Sciences"}, {"publisher": "Springer Nature", "title": "Enhancing Bone Scaffold Fabrication: A Comparative Study of Manual Casting and Automated 3D Bioprinting", "doi": "10.1007/s10439-025-03752-9", "journal": "Annals of Biomedical Engineering", "subject": "Biomedical and Life Sciences", "author": "Ali S. Alshami", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "The failure pattern for the magnetic sphincter augmentation device: a single-institution case series with literature review", "doi": "10.1007/s00464-025-11842-x", "journal": "Surgical Endoscopy", "subject": "Medicine", "author": "Samuel J. Bloomsburg", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Motivating Human Flourishing: An Ethnoracial Appraisal-Based Intervention On Growth Mindset", "doi": "10.1007/s41042-025-00236-y", "journal": "International Journal of Applied Positive Psychology", "subject": "Behavioral Science and Psychology", "author": "Akorede A Teriba", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "Secure and Trustworthy Microelectronics: Vulnerabilities, Solutions, and Trends", "doi": "10.1007/s41635-025-00165-x", "journal": "Journal of Hardware and Systems Security", "subject": "Engineering", "author": "Sriram Prabhakara Rao", "date": "", "article_type": "ReviewPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "Histamine H3 Receptor Antagonist, Thioperamide, Improves Behavioral and Neuropathological Changes Associated with Subclinical Hypersensitivity to a Cow’s Milk Allergen", "doi": "10.1007/s11481-025-10256-9", "journal": "Journal of Neuroimmune Pharmacology", "subject": "Biomedical and Life Sciences", "author": "Kumi Nagamoto-Combs", "date": "2025-12-19", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Motivation is important, but can it be improved? Examining faculty perceptions of research motivation and productivity interventions", "doi": "10.1007/s10734-025-01546-5", "journal": "Higher Education", "subject": "Education", "author": "Robert H. Stupnisky", "date": "2025-11-21", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Large-scale Online Science and Engineering Professional Learning for Rural Elementary Teachers", "doi": "10.1007/s11165-025-10300-x", "journal": "Research in Science Education", "subject": "Education", "author": "Tugba Boz", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Public Perceptions of Police Use of Force Encounters: Demographic, Attitudinal, and Situational Predictors", "doi": "10.1007/s11896-025-09777-z", "journal": "Journal of Police and Criminal Psychology", "subject": "Behavioral Science and Psychology", "author": "Cassandra Flick", "date": "2025-10-28", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "Contraction Ridge Estimator: Simulation and Application to Economic Data", "doi": "10.1007/s10614-025-11182-x", "journal": "Computational Economics", "subject": "Economics and Finance", "author": "Adewale F. Lukman", "date": "2025-11-17", "article_type": "OriginalPaper", "license": "CC BY", "field": "Economics & Business"}, {"publisher": "Springer Nature", "title": "Poor Vision from Copper Deficiency", "doi": "10.1007/s13668-025-00712-6", "journal": "Current Nutrition Reports", "subject": "Medicine", "author": "Leslie M. Klevay", "date": "2025-11-21", "article_type": "ReviewPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Words have power: an analyses of word use and conversations by teachers as they transition to teaching in an outdoor classroom", "doi": "10.1007/s42322-025-00234-3", "journal": "Journal of Outdoor and Environmental Education", "subject": "Education", "author": "Anne R. Bodensteiner", "date": "2025-12-16", "article_type": "OriginalPaper", "license": "CC BY", "field": "Education"}, {"publisher": "Springer Nature", "title": "Longevity-driven hepatic transcriptional programs mediate resilience to diet-induced liver injury in Ames dwarf mice", "doi": "10.1007/s11357-025-02017-6", "journal": "GeroScience", "subject": "Biomedical and Life Sciences", "author": "Holly Brown-Borg", "date": "2025-11-27", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Life is just a classroom: students perceptions of courses incorporating popular culture", "doi": "10.1007/s10639-025-13843-8", "journal": "Education and Information Technologies", "subject": "Computer Science", "author": "Virginia Clinton-Lisell", "date": "2026-01-04", "article_type": "OriginalPaper", "license": "CC BY", "field": "Computer Science"}, {"publisher": "Springer Nature", "title": "Fluorescence Imaging and Machine Learning for Surface Contamination Detection: A Comparative Study with ATP Testing", "doi": "10.1007/s42853-025-00293-w", "journal": "Journal of Biosystems Engineering", "subject": "Engineering", "author": "Kouhyar Tavakolian", "date": "2026-02-02", "article_type": "OriginalPaper", "license": "CC BY", "field": "Engineering"}, {"publisher": "Springer Nature", "title": "The Association of Prenatal Exposure to Intimate Partner Violence with Children’s Socioemotional Competence at Five Years Postpartum", "doi": "10.1007/s10896-026-01053-w", "journal": "Journal of Family Violence", "subject": "Medicine", "author": "June-Yung Kim", "date": "2026-02-02", "article_type": "OriginalPaper", "license": "CC BY", "field": "Life Sciences & Medicine"}, {"publisher": "Springer Nature", "title": "Barriers and opportunities to broader participation in transformative model building for sustainable infrastructure in the Southeastern U.S.", "doi": "10.1007/s42532-026-00249-0", "journal": "Socio-Ecological Practice Research", "subject": "Earth and Environmental Science", "author": "Amanda Fackler", "date": "2026-03-25", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Pharmaceutical adsorption and ex-situ electro-regeneration performance of magnetically modified activated carbon", "doi": "10.1007/s11356-026-37655-6", "journal": "Environmental Science and Pollution Research", "subject": "Earth and Environmental Science", "author": "Mahmut S. Ersan", "date": "2026-03-25", "article_type": "OriginalPaper", "license": "CC BY", "field": "Earth & Environmental Science"}, {"publisher": "Springer Nature", "title": "Investigating Resilience, Burnout, and Empathy: An Exploratory Study of Small City Police Officers", "doi": "10.1007/s11896-026-09806-5", "journal": "Journal of Police and Criminal Psychology", "subject": "Behavioral Science and Psychology", "author": "Ashley K. Fansher", "date": "2026-03-27", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Springer Nature", "title": "TransEdge: a lightweight transformer-based anomaly detection framework for edge devices", "doi": "10.1007/s10844-026-01043-w", "journal": "Journal of Intelligent Information Systems", "subject": "Computer Science", "author": "Sicong Shao", "date": "2026-04-13", "article_type": "OriginalPaper", "license": "CC BY", "field": "Computer Science"}, {"publisher": "Springer Nature", "title": "Adverse Childhood Experiences and Flourishing Among Emerging Adult College Students: Religious Beliefs/Spirituality and Social Support as Research Domain Criteria (RDoC)-Informed Mechanisms", "doi": "10.1007/s10804-026-09560-2", "journal": "Journal of Adult Development", "subject": "Behavioral Science and Psychology", "author": "June-Yung Kim", "date": "", "article_type": "OriginalPaper", "license": "CC BY", "field": "Psychology & Behavioral Science"}, {"publisher": "Taylor & Francis", "title": "The Effect of Player-Coach Relationships on Athlete Participation and Retention", "doi": "10.1080/08924562.2026.2631472", "journal": "Strategies", "subject": "Education, Health & Behavior", "author": "[\"Mark Rerick\"]", "date": "2025-05-28 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Education"}, {"publisher": "Taylor & Francis", "title": "Prosocial Storytelling: The Role of Rewards and Punishments in Shaping Inclusive Norms through Narratives", "doi": "10.1080/01463373.2025.2601091", "journal": "Communication Quarterly", "subject": "Communications", "author": "[\"Linqi Lu\"]", "date": "2025-11-26 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "Taylor & Francis", "title": "â€œThat is a lie:â€ participatory visual methods as a form of resistance in dialoguing and negotiating schooling post-pregnancy in Malawi", "doi": "10.1080/09518398.2025.2572457", "journal": "International Journal of Qualitative Studies in Education", "subject": "Education, Health & Behavior", "author": "[\"Pempho Chinkondenji\"]", "date": "2025-09-09 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Education"}, {"publisher": "Taylor & Francis", "title": "Promoting News and Political Information Consumption on Social Media with Self-Interest and Public Interest Nudges", "doi": "10.1080/1369118X.2025.2565333", "journal": "Information, Communication & Society", "subject": "Communications", "author": "[\"Xudong Yu\"]", "date": "2025-09-18 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "Taylor & Francis", "title": "Intersections of sexual orientation, gender identity, and race/ethnicity and odds of reporting depression and anxiety symptomology in the Household Pulse Survey", "doi": "10.1080/09638237.2025.2558508", "journal": "Journal of Mental Health", "subject": "Public Health (SMHS)", "author": "[\"Andrew Williams\"]", "date": "2025-07-12 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Life Sciences & Medicine"}, {"publisher": "Taylor & Francis", "title": "Victimization and Perpetration of Sexual Violence in College Men: The Characteristics of Social Ecology, Shared Risk Factors and their Implications for Prevention", "doi": "10.1080/10926771.2025.2549743", "journal": "Journal of Aggression, Maltreatment & Trauma", "subject": "Psychology", "author": "[\"Jasmine A Skorheim\"]", "date": "2025-07-06 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Psychology & Behavioral Science"}, {"publisher": "Taylor & Francis", "title": "How Mediated Intergroup Contact Works: Exploring Mechanisms of Music and Language Learning Activitiesâ€™ Effects", "doi": "10.1080/15213269.2025.2548910", "journal": "Media Psychology", "subject": "Communications", "author": "[\"Hyeonchang Gim\"]", "date": "2025-04-15 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "Taylor & Francis", "title": "Examining the Origins and Outcomes of Research-Related Emotions in Faculty: Developing the Research Emotions Questionnaire (REQ)", "doi": "10.1080/00221546.2025.2497222", "journal": "The Journal of Higher Education", "subject": "Education, Health & Behavior", "author": "[\"Robert Stupnisky\"]", "date": "2025-04-21 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Education"}, {"publisher": "Taylor & Francis", "title": "Beyond School Walls: The Community Politics of Educational Controversy", "doi": "10.1080/00131946.2025.2545184", "journal": "Educational Studies", "subject": "Teaching & Leadership", "author": "[\"Caitlin Brecklin\"]", "date": "2025-08-05 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Other"}, {"publisher": "Taylor & Francis", "title": "What I bring to the room: a reflective practice for addressing implicit bias in trainees and practitioners", "doi": "10.1080/14623943.2025.2494328", "journal": "Reflective Practice", "subject": "Education, Health & Behavior", "author": "[\"charmeka Newton\"]", "date": "2025-03-30 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Education"}, {"publisher": "Taylor & Francis", "title": "Youth Comorbidity Patterns and Research Domain Criteria (RDoC)-Informed Factors: A Scoping Review of Person-Centered Psychopathology Research", "doi": "10.1080/26408066.2025.2544941", "journal": "Journal of Evidence-Based Social Work", "subject": "Social Work", "author": "[\"June-Yung Kim\"]", "date": "2025-08-02 00:00:00", "article_type": "Method", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "Taylor & Francis", "title": "Financial Health is Behavioral Health: Enhancing Integrated Care Practice", "doi": "10.1080/26408066.2025.2542448", "journal": "Journal of Evidence-Based Social Work", "subject": "Social Work", "author": "[\"Jeffrey Anvari-Clark\"]", "date": "2025-07-28 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "Taylor & Francis", "title": "Toward Glocal Citizenship: Rethinking the Traditions, Goals, and Curricular Themes of International Education", "doi": "10.1080/14675986.2025.2535203", "journal": "Intercultural Education", "subject": "Teaching & Leadership", "author": "[\"Tao Wang\"]", "date": "2025-06-17 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Other"}, {"publisher": "Taylor & Francis", "title": "Examining Grading Purpose and Practices: A Multivariate Analysis of Secondary Stakeholder Perceptions", "doi": "10.1080/0969594X.2025.2534813", "journal": "Assessment in Education: Principles, Policy & Practice", "subject": "Teaching & Leadership", "author": "[\"Laura J. Link\"]", "date": "2025-07-09 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Other"}, {"publisher": "Taylor & Francis", "title": "Life is Just a Classroom: Student Perceptions of Courses Incorporating Popular Culture", "doi": "10.1080/87567555.2025.2531340", "journal": "College Teaching", "subject": "Education, Health & Behavior", "author": "[\"Virginia Clinton-Lisell\"]", "date": "2025-07-04 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Education"}, {"publisher": "Taylor & Francis", "title": "What do we know about teacher education for difficult topics? A systematic review", "doi": "10.1080/03054985.2025.2511732", "journal": "Oxford Review of Education", "subject": "Teaching & Leadership", "author": "[\"Logan Rutten\"]", "date": "2025-05-10 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Other"}, {"publisher": "Taylor & Francis", "title": "A content analysis of interracial and intraracial interactions in movie trailers: Insights from vicarious mediated contact", "doi": "10.1080/08824096.2025.2459114", "journal": "Communication Research Reports", "subject": "Communications", "author": "[\"Hyeonchang Gim\"]", "date": "2025-01-13 00:00:00", "article_type": "Research Article", "license": "NCNDFirstPreselection", "field": "Social Sciences"}, {"publisher": "ACM", "title": "A Permafrost Tunnel Digital Twin: Web3D Applications for Infrastructure Visualization and Arctic Research", "doi": "10.1145/3746237.3746291", "journal": "The 30th International Conference on 3D Web Technology", "subject": "Proceeding", "author": "Hollie Leggett", "date": "09/07/2025", "article_type": "short-paper", "license": "CC-BY", "field": "Computer Science"}, {"publisher": "ACM", "title": "Predicting Students' Interest from Small Group Conversational Characteristics: Insights from an AI Literacy Education with High School Students", "doi": "10.1145/3641555.3705233", "journal": "Proceedings of the 56th ACM Technical Symposium on Computer Science Education V. 2", "subject": "Proceeding", "author": "Shenghua Zha", "date": "02/18/2025", "article_type": "poster", "license": "", "field": "Computer Science"}, {"publisher": "ACM", "title": "Survey of Swarm Intelligence Approaches to Search Documents Based On Semantic Similarity", "doi": "10.1145/3729706.3729817", "journal": "2025 4th International Conference on Cyber Security, Artificial Intelligence and the Digital Economy", "subject": "Proceeding", "author": "Chandrashekar Muniyappa", "date": "07/01/2025", "article_type": "research-article", "license": "CC-BY", "field": "Computer Science"}, {"publisher": "ACM", "title": "Survey of Genetic and Differential Evolutionary Algorithm Approaches to Search Documents Based On Semantic Similarity", "doi": "10.1145/3729706.3729790", "journal": "2025 4th International Conference on Cyber Security, Artificial Intelligence and the Digital Economy", "subject": "Proceeding", "author": "Chandrashekar Muniyappa", "date": "07/01/2025", "article_type": "research-article", "license": "CC-BY", "field": "Computer Science"}, {"publisher": "Cambridge University Press", "title": "Bright or dark, vain or villainous? How entrepreneurial fitness, Machiavellianism and narcissism relate to entrepreneurial intention", "doi": "10.1017/jmo.2023.15", "journal": "Journal of Management & Organization", "subject": "Management", "author": "Sheila K.  Hanson", "date": "2023-06-08 00:00:00", "article_type": "Research-Article", "license": "", "field": "Economics & Business"}, {"publisher": "Cambridge University Press", "title": "Phylogenetic relationships and further unknown diversity of diplostomids (Diplostomida: Diplostomidae) parasitic in kingfishers", "doi": "10.1017/S0022149X22000852", "journal": "Journal of Helminthology", "subject": "Medicine", "author": "V.V.  Tkach", "date": "2023-01-13 00:00:00", "article_type": "Research-Article", "license": "", "field": "Life Sciences & Medicine"}, {"publisher": "Cambridge University Press", "title": "New soft-bodied panarthropods from diverse Spence Shale (Cambrian; Miaolingian; Wuliuan) depositional environments", "doi": "10.1017/jpa.2023.24", "journal": "Journal of Paleontology", "subject": "Earth and environmental science", "author": "Julien  Kimmig", "date": "2023-05-31 00:00:00", "article_type": "Research-Article", "license": "CC-BY", "field": "Earth & Environmental Science"}, {"publisher": "Cambridge University Press", "title": "A problematic soft-bodied fossil from the Cambrian (Miaolingian, Wuliuan) of Utah", "doi": "10.1017/S0016756825100265", "journal": "Geological Magazine", "subject": "Earth and environmental science", "author": "Julien Kimmig", "date": "2025-09-18", "article_type": "Rapid-Communication", "license": "CC-BY", "field": "Earth & Environmental Science"}, {"publisher": "Cambridge University Press", "title": "Recent advances and current state of knowledge of phylogenetics and systematics of the Diplostomoidea with a proposal of a new classification system and a key to genera", "doi": "10.1017/S0022149X25100473", "journal": "Journal of Helminthology", "subject": "Medicine", "author": "Vasyl Tkach", "date": "2025-07-28", "article_type": "Research-Article", "license": "CC-BY", "field": "Life Sciences & Medicine"}, {"publisher": "Cambridge University Press", "title": "The phylogenetic position of the unusual diplostomoidean genus Schwartzitrema Vigueras, 1941 (Digenea, Diplostomoidea) and description of 2 new species from Neotropics", "doi": "10.1017/S0022149X25100837", "journal": "Journal of Helminthology", "subject": "Medicine", "author": "Vasyl Tkach", "date": "2025-11-14", "article_type": "Research-Article", "license": "CC-BY", "field": "Life Sciences & Medicine"}, {"publisher": "Cambridge University Press", "title": "Haemosporidian infection risk and community structure determined by duck feeding guild", "doi": "10.1017/S0031182025000137", "journal": "Parasitology", "subject": "Medicine", "author": "Vasyl Tkach", "date": "2025-02-17", "article_type": "Research-Article", "license": "CC-BY", "field": "Life Sciences & Medicine"}, {"publisher": "Oxford University Press", "title": "Navigating Gender Disparities in Communication Research Leadership: Academic Recognition, Career Development, and Compensation", "doi": "10.1093/anncom/wlaf020", "journal": "Annals of the International Communication Association", "subject": "Research Article", "author": "Diego Fregolent Mendes de Oliveira", "date": "2025-09-04", "article_type": "research-article", "license": "OA-CC-BY-NC 4.0", "field": "Social Sciences"}, {"publisher": "Oxford University Press", "title": "Everything will be dead: The Eco-Activist Archetype in a Time of Bewilderment", "doi": "10.1093/isle/isaf033", "journal": "ISLE: Interdisciplinary Studies in Literature and Environment", "subject": "Scholarly Article", "author": "Grant McMillan", "date": "2025-04-21", "article_type": "research-article", "license": "OA-CC-BY-NC-ND 4.0", "field": "Humanities"}, {"publisher": "Oxford University Press", "title": "Splenic Laceration Following Routine Colonoscopy: A Case Report", "doi": "10.1093/jscr/rjaf940", "journal": "Journal of Surgical Case Reports", "subject": "Case report", "author": "Autumn Bertch", "date": "2025-11-04", "article_type": "case-report", "license": "OA-CC-BY 4.0", "field": "Life Sciences & Medicine"}];
+
+let activePublisher = null, activeField = null, searchQuery = '', currentPage = 1;
+const PER_PAGE = 20;
+
+function buildFilters() {
+  const pubCounts = {}, fieldCounts = {};
+  ARTICLES.forEach(a => {
+    pubCounts[a.publisher] = (pubCounts[a.publisher]||0) + 1;
+    if (a.field) fieldCounts[a.field] = (fieldCounts[a.field]||0) + 1;
+  });
+  const pubDiv = document.getElementById('publisher-filters');
+  Object.entries(pubCounts).sort((a,b)=>b[1]-a[1]).forEach(([p,c]) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn'; btn.dataset.publisher = p;
+    btn.innerHTML = `<span>${p}</span><span class="count">${c}</span>`;
+    btn.onclick = () => { activePublisher = activePublisher===p?null:p; currentPage=1; renderFilters(); render(); };
+    pubDiv.appendChild(btn);
+  });
+  const fieldDiv = document.getElementById('field-filters');
+  const fieldOrder = ['Life Sciences & Medicine','Law & Political Science','Humanities','Social Sciences','Psychology & Behavioral Science','Earth & Environmental Science','History','Engineering','Education','Economics & Business','Computer Science','Chemistry','Physical Sciences','Mathematics','Other'];
+  fieldOrder.forEach(f => {
+    if (!fieldCounts[f]) return;
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn'; btn.dataset.field = f;
+    btn.innerHTML = `<span>${f}</span><span class="count">${fieldCounts[f]}</span>`;
+    btn.onclick = () => { activeField = activeField===f?null:f; currentPage=1; renderFilters(); render(); };
+    fieldDiv.appendChild(btn);
+  });
+}
+
+function renderFilters() {
+  document.querySelectorAll('.filter-btn[data-publisher]').forEach(btn => btn.classList.toggle('active', btn.dataset.publisher===activePublisher));
+  document.querySelectorAll('.filter-btn[data-field]').forEach(btn => btn.classList.toggle('active', btn.dataset.field===activeField));
+}
+
+function clearFilters() {
+  activePublisher = null; activeField = null; searchQuery = '';
+  document.getElementById('search-input').value = '';
+  currentPage = 1; renderFilters(); render();
+}
+
+function getFiltered() {
+  let arr = ARTICLES;
+  if (activePublisher) arr = arr.filter(a=>a.publisher===activePublisher);
+  if (activeField) arr = arr.filter(a=>a.field===activeField);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    arr = arr.filter(a => (a.title||'').toLowerCase().includes(q)||(a.author||'').toLowerCase().includes(q)||(a.journal||'').toLowerCase().includes(q)||(a.publisher||'').toLowerCase().includes(q));
+  }
+  return arr;
+}
+
+function sortArticles(arr) {
+  const s = document.getElementById('sort-select').value;
+  return [...arr].sort((a,b) => {
+    if (s==='date-desc') return (b.date||'').localeCompare(a.date||'');
+    if (s==='date-asc') return (a.date||'').localeCompare(b.date||'');
+    if (s==='title') return (a.title||'').localeCompare(b.title||'');
+    if (s==='author') return (a.author||'').localeCompare(b.author||'');
+    return 0;
+  });
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const date = new Date(d);
+  if (isNaN(date)) return (d+'').split(' ')[0]||d;
+  return date.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function render() {
+  const filtered = sortArticles(getFiltered());
+  document.getElementById('filtered-count').textContent = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(filtered.length/PER_PAGE));
+  if (currentPage > totalPages) currentPage = 1;
+  const pageItems = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+  const list = document.getElementById('article-list');
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <p>No articles match your filters.<br><button class="clear-btn" onclick="clearFilters()">Clear filters</button></p>
+    </div>`;
+    document.getElementById('pagination').innerHTML = '';
+    renderAuthors(filtered); renderStats(filtered); return;
+  }
+
+  list.innerHTML = pageItems.map(a => {
+    const doiUrl = a.doi ? `https://doi.org/${a.doi}` : '';
+    const titleHtml = doiUrl
+      ? `<a href="${doiUrl}" target="_blank" rel="noopener">${escHtml(a.title||'Untitled')}</a>`
+      : escHtml(a.title||'Untitled');
+    return `<div class="article-card">
+      <div class="article-title">${titleHtml}</div>
+      <div class="article-meta">
+        ${a.author?`<span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>${escHtml(a.author)}</span>`:''}
+        ${a.journal?`<span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>${escHtml(a.journal)}</span>`:''}
+        ${formatDate(a.date)?`<span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${formatDate(a.date)}</span>`:''}
+      </div>
+      <div class="article-tags">
+        <span class="tag tag-publisher">${escHtml(a.publisher)}</span>
+        ${a.field&&a.field!=='Other'?`<span class="tag tag-field">${escHtml(a.field)}</span>`:''}
+        <span class="tag tag-oa"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Open Access</span>
+        ${doiUrl?`<a class="doi-link" href="${doiUrl}" target="_blank" rel="noopener">View Article ↗</a>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  renderPagination(totalPages);
+  renderAuthors(filtered);
+  renderStats(filtered);
+}
+
+function renderPagination(totalPages) {
+  const pg = document.getElementById('pagination');
+  if (totalPages <= 1) { pg.innerHTML = ''; return; }
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>← Prev</button>`;
+  for (let i=1; i<=totalPages; i++) {
+    if (i===1||i===totalPages||Math.abs(i-currentPage)<=2) html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    else if (Math.abs(i-currentPage)===3) html += `<span style="color:var(--und-gray);padding:0 4px">…</span>`;
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>Next →</button>`;
+  pg.innerHTML = html;
+}
+
+function goPage(p) { currentPage=p; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+function renderAuthors(filtered) {
+  const authorMap = {};
+  filtered.forEach(a => {
+    if (!a.author) return;
+    const name = a.author.trim().replace(/\s+/g,' ');
+    if (!name) return;
+    if (!authorMap[name]) authorMap[name] = [];
+    authorMap[name].push(a);
+  });
+  const sorted = Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0]));
+  document.getElementById('author-count').textContent = sorted.length;
+  document.getElementById('author-list').innerHTML = sorted.map(([name,arts]) => {
+    const sample = arts[0]?.title ? `"${arts[0].title.substring(0,55)}${arts[0].title.length>55?'…':''}"` : '';
+    return `<div class="author-card" onclick="filterByAuthor('${name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
+      <div class="author-name">${escHtml(name)}</div>
+      <div class="author-count">${arts.length} article${arts.length>1?'s':''}</div>
+      ${sample?`<div class="author-pubs">${escHtml(sample)}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function filterByAuthor(name) {
+  searchQuery = name;
+  document.getElementById('search-input').value = name;
+  switchTab('articles', document.querySelectorAll('.tab-btn')[0]);
+  currentPage = 1; render();
+}
+
+function renderStats(filtered) {
+  const pubCounts={}, fieldCounts={}, yearCounts={};
+  filtered.forEach(a => {
+    pubCounts[a.publisher] = (pubCounts[a.publisher]||0)+1;
+    if (a.field) fieldCounts[a.field] = (fieldCounts[a.field]||0)+1;
+    if (a.date) { const yr=(a.date+'').substring(0,4); if(yr>='2020'&&yr<='2030') yearCounts[yr]=(yearCounts[yr]||0)+1; }
+  });
+  const maxPub=Math.max(...Object.values(pubCounts),1);
+  const maxField=Math.max(...Object.values(fieldCounts),1);
+  const maxYear=Math.max(...Object.values(yearCounts),1);
+
+  const pubBars=Object.entries(pubCounts).sort((a,b)=>b[1]-a[1]).map(([p,c],i)=>
+    `<div class="bar-row"><span class="bar-label" title="${escHtml(p)}">${escHtml(p)}</span><div class="bar-track"><div class="bar-fill${i%2===1?' bar-fill-black':''}" style="width:${Math.round(c/maxPub*100)}%"></div></div><span class="bar-num">${c}</span></div>`
+  ).join('');
+
+  const fieldBars=Object.entries(fieldCounts).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([f,c],i)=>
+    `<div class="bar-row"><span class="bar-label" title="${escHtml(f)}">${escHtml(f)}</span><div class="bar-track"><div class="bar-fill${i%2===1?' bar-fill-black':''}" style="width:${Math.round(c/maxField*100)}%"></div></div><span class="bar-num">${c}</span></div>`
+  ).join('');
+
+  const yearBars=Object.entries(yearCounts).sort((a,b)=>a[0].localeCompare(b[0])).map(([y,c])=>
+    `<div class="bar-row"><span class="bar-label">${y}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/maxYear*100)}%"></div></div><span class="bar-num">${c}</span></div>`
+  ).join('');
+
+  const doiCount=filtered.filter(a=>a.doi).length;
+  const doiPct=filtered.length?Math.round(doiCount/filtered.length*100):0;
+
+  document.getElementById('stats-content').innerHTML = `
+    <div class="stats-card"><h3>Articles by Publisher</h3>${pubBars||'<p style="color:var(--text-light);font-size:.85rem">No data</p>'}</div>
+    <div class="stats-card"><h3>Articles by Research Field</h3>${fieldBars||'<p style="color:var(--text-light);font-size:.85rem">No data</p>'}</div>
+    <div class="stats-card"><h3>Articles by Year Published</h3>${yearBars||'<p style="color:var(--text-light);font-size:.85rem">No data</p>'}</div>
+    <div class="stats-card"><h3>Open Access Coverage</h3>
+      <div class="bar-row"><span class="bar-label">Articles with DOI</span><div class="bar-track"><div class="bar-fill" style="width:${doiPct}%"></div></div><span class="bar-num">${doiCount}</span></div>
+      <div class="bar-row"><span class="bar-label">Total articles</span><div class="bar-track"><div class="bar-fill bar-fill-black" style="width:100%"></div></div><span class="bar-num">${filtered.length}</span></div>
+      <p style="margin-top:16px;font-size:.82rem;color:var(--text-light);line-height:1.5">Every article listed here is freely available to readers worldwide — no subscriptions, no paywalls — made possible by the Chester Fritz Library's Read &amp; Publish agreements.</p>
+    </div>`;
+}
+
+function switchTab(name, btn) {
+  ['articles','authors','stats'].forEach(t => document.getElementById('tab-'+t).style.display=t===name?'block':'none');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b===btn));
+}
+
+buildFilters();
+document.getElementById('search-input').addEventListener('input', e => { searchQuery=e.target.value; currentPage=1; render(); });
+render();
+</script>
+</body>
+</html>
